@@ -7,6 +7,9 @@ import httpx
 from dotenv import load_dotenv
 from data_models import WeatherRequest, WeatherResponse
 from selectolax.parser import HTMLParser
+from functools import lru_cache
+import time
+
 
 # Load environment variables
 load_dotenv()
@@ -99,29 +102,36 @@ async def call_openai_api(prompt: str) -> Dict[str, Any]:
         logger.error(f"Error calling OpenAI API: {e}")
         raise HTTPException(status_code=500, detail="Failed to process weather data.")
 
-# Main endpoint
-@app.post("/weather", response_model=WeatherResponse)
-async def get_weather(request: WeatherRequest):
+@lru_cache(maxsize=100)
+async def cached_weather_response(location: str) -> dict:
+    # simulate a key lookup with internal logic
+    print(f"Fetching fresh weather for: {location}")
     """
     Endpoint to get weather data for a given location.
     """
     try:
         # Step 1: Fetch HTML
-        raw_html = await fetch_weather_html(request.location)
+        raw_html = await fetch_weather_html(location)
 
         # Step #2: Extract relevant snippets
         cleaned_text = extract_weather_snippets(raw_html)
         
         # Step 3: Construct prompt
-        prompt = construct_prompt(request.location, cleaned_text)
+        prompt = construct_prompt(location, cleaned_text)
         
         # Step 3: Call OpenAI API
         weather_data = await call_openai_api(prompt)
 
         # Step 4: Return response
-        return WeatherResponse(**weather_data)
+        return weather_data
     except HTTPException as http_exc:
         raise http_exc
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred.")
+
+# Main endpoint
+@app.post("/weather", response_model=WeatherResponse)
+async def get_weather(request: WeatherRequest):
+    data = await cached_weather_response(request.location)
+    return WeatherResponse(**data)
