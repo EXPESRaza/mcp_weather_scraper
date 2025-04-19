@@ -43,7 +43,9 @@ These are displayed in a clean visual layout under each result card.
 
 ## 🖥️ Streamlit App Preview
 
-![Streamlit Weather App](assets/streamlit_screenshot.png)
+<p align="center">
+  <img src="assets/streamlit_screenshot.png" width="70%">
+</p>
 
 ---
 
