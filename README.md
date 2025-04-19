@@ -1,6 +1,6 @@
 # 🌦️ MCP Weather Scraper
 
-A minimal working example of integrating an LLM (via Ollama or OpenAI) with an [MCP (Model Context Protocol)](https://github.com/ai-dot-ai/model-context-protocol) server to fetch and extract real-time weather data from the web.
+A minimal working example of integrating an LLM (via OpenAI) with an [MCP (Model Context Protocol)](https://github.com/ai-dot-ai/model-context-protocol) server to fetch and extract real-time weather data from the web.
 
 ---
 
