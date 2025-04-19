@@ -48,18 +48,15 @@ A minimal working example of integrating an LLM (via OpenAI) with an [MCP (Model
    ```env
    OPENAI_API_KEY=your_openai_api_key
    ```
-
 5. **Running the Server**
    ```bash
    uvicorn server:app --reload
    ```
    The server will be available at http://localhost:8000.
-
-6. You can access the API documentation at:
+   You can access the API documentation at:
    - Swagger UI: http://localhost:8000/docs
    - ReDoc: http://localhost:8000/redoc
-
-7. **Making a Request**
+6. **Making a Request**
    ```bash
    python client.py
    ```
