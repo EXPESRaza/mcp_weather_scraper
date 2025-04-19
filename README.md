@@ -38,7 +38,9 @@ MCP Weather Scraper is a FastAPI-based application that fetches weather data for
    pip install -r requirements.txt
    ```
 4. Create a .env file in the root directory and add your OpenAI API key:
+   ```env
    OPENAI_API_KEY=your_openai_api_key
+   ```
 
 ## Usage
 
@@ -70,15 +72,21 @@ You can use the provided client.py script to make a request to the /weather endp
    python [client.py](http://_vscodecontentref_/1)
 
    The script sends a POST request with the following payload:
+
+   ```json
    {
-   "location": "Seattle"
+     "location": "Seattle"
    }
+   ```
 
    The server will respond with weather data in JSON format, such as:
+
+   ```json
    {
-   "location": "Seattle",
-   "temperature": "15°C",
-   "humidity": "80%",
-   "air_quality": "Good",
-   "condition": "Cloudy"
+     "location": "Seattle",
+     "temperature": "15°C",
+     "humidity": "80%",
+     "air_quality": "Good",
+     "condition": "Cloudy"
    }
+   ```
