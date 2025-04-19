@@ -41,6 +41,12 @@ These are displayed in a clean visual layout under each result card.
 
 ---
 
+## 🖥️ Streamlit App Preview
+
+![Streamlit Weather App](assets/streamlit_screenshot.png)
+
+---
+
 ## Requirements
 
 - Python 3.9 or higher
@@ -105,6 +111,10 @@ These are displayed in a clean visual layout under each result card.
 ## 📦 Folder Structure
 ```bash
 .
+📁 mcp_weather_scraper/
+│
+├── assets/
+│   └── streamlit_screenshot.png
 ├── server.py          # MCP-compatible tool server
 ├── client.py          # MCP client that interacts with model + tools
 ├── data_models.py     # Pydantic schemas for request/response
