@@ -7,3 +7,5 @@ requests
 dotenv
 openai>=1.0.0
 selectolax
+streamlit
+requests

@@ -97,7 +97,33 @@ async def call_openai_api(prompt: str) -> Dict[str, Any]:
             max_tokens=2000,
             response_format={"type": "json_object"}
         )
-        return json.loads(response.choices[0].message.content.strip())
+        # return json.loads(response.choices[0].message.content.strip())
+        llm_reply = response.choices[0].message.content
+        parsed_data = json.loads(llm_reply)
+        
+         # Extract usage data and convert it to a dictionary
+        usage_data = response.usage if hasattr(response, 'usage') else {}  # Includes prompt_tokens, completion_tokens, total_tokens
+        usage_dict = {
+            "completion_tokens": usage_data.completion_tokens,
+            "prompt_tokens": usage_data.prompt_tokens,
+            "total_tokens": usage_data.total_tokens,
+            "completion_tokens_details": vars(usage_data.completion_tokens_details),
+            "prompt_tokens_details": vars(usage_data.prompt_tokens_details),
+        } if usage_data else {}
+        
+        print(f"parsed_data in server: {parsed_data}")
+        print(f"usage in server: {usage_dict}")
+        
+        # Return the parsed data along with usage information
+        return {
+            "location": parsed_data.get("location", "Unknown"),
+            "temperature": parsed_data.get("temperature", "Unknown"),
+            "humidity": parsed_data.get("humidity", "Unknown"),
+            "air_quality": parsed_data.get("air_quality", "Unknown"),
+            "condition": parsed_data.get("condition", "Unknown"),
+            "usage": usage_dict
+        }
+
     except Exception as e:
         logger.error(f"Error calling OpenAI API: {e}")
         raise HTTPException(status_code=500, detail="Failed to process weather data.")

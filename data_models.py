@@ -1,4 +1,5 @@
 
+from typing import Optional, Dict, Any
 from pydantic import BaseModel
 
 class WeatherRequest(BaseModel):
@@ -10,3 +11,4 @@ class WeatherResponse(BaseModel):
     humidity: str
     air_quality: str
     condition: str
+    usage: Optional[Dict[str, Any]] 
