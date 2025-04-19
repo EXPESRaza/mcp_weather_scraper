@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 import httpx
 from dotenv import load_dotenv
 from data_models import WeatherRequest, WeatherResponse
+from selectolax.parser import HTMLParser
 
 # Load environment variables
 load_dotenv()
@@ -21,6 +22,18 @@ app = FastAPI()
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Utility function to extract weather snippets from HTML
+def extract_weather_snippets(html: str) -> str:
+    tree = HTMLParser(html)
+    snippets = []
+
+    for node in tree.css("div"):
+        text = node.text(strip=True)
+        if any(keyword in text.lower() for keyword in ["temperature", "humidity", "air quality", "°", "feels like", "wind", "condition"]):
+            snippets.append(text)
+
+    return "\n".join(snippets[:10])  # return top relevant sections
 
 # Utility function to fetch HTML from the web
 async def fetch_weather_html(location: str) -> str:
@@ -59,12 +72,23 @@ async def call_openai_api(prompt: str) -> Dict[str, Any]:
     """Call the OpenAI API with the given prompt."""
     import openai
     client = openai.OpenAI(api_key=API_KEY)
+
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a weather data extractor."},
-                {"role": "user", "content": prompt }
+                {"role": "user", "content": f"""
+            Extract the following details from the given HTML text:
+            - location
+            - temperature
+            - humidity
+            - air_quality
+            - condition
+
+            Text:
+            {prompt}
+            """}
             ],
             temperature=0,
             max_tokens=2000,
@@ -85,9 +109,12 @@ async def get_weather(request: WeatherRequest):
         # Step 1: Fetch HTML
         raw_html = await fetch_weather_html(request.location)
 
-        # Step 2: Construct prompt
-        prompt = construct_prompt(request.location, raw_html)
-
+        # Step #2: Extract relevant snippets
+        cleaned_text = extract_weather_snippets(raw_html)
+        
+        # Step 3: Construct prompt
+        prompt = construct_prompt(request.location, cleaned_text)
+        
         # Step 3: Call OpenAI API
         weather_data = await call_openai_api(prompt)
 

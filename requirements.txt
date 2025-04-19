@@ -6,3 +6,4 @@ beautifulsoup4
 requests
 dotenv
 openai>=1.0.0
+selectolax
