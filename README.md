@@ -22,7 +22,22 @@ This project is an experimental implementation of the **[Model Context Protocol 
 
 ---
 
-#### 📊 Token Usage & Performance Metrics
+## 🧠 Refresh Before You Dive In  
+**Top 5 Concepts to Brush Up On for This Repo**
+
+| 🧩 Concept | 🔍 What It Is | ⚙️ Why It Matters |
+|-----------|---------------|-------------------|
+| **Model Context Protocol (MCP)** | A new protocol for tool-calling in LLMs | Powers structured AI-agent communication |
+| **Uvicorn** | Fast ASGI server for Python web apps | Hosts the FastAPI-based MCP server |
+| **Selectolax** | High-speed HTML parser | Efficiently scrapes and extracts weather data |
+| **`functools.lru_cache`** | Built-in Python decorator to cache function calls | Boosts performance by avoiding repeated fetches |
+| **Token Usage Metrics (OpenAI)** | Info on how many tokens were used in an LLM call | Helps track cost and optimize prompt design |
+
+> 💡 Even if you're familiar with Python and APIs, these tools represent **cutting-edge AI stack engineering** and are worth a quick look!
+
+---
+
+## 📊 Token Usage & Performance Metrics
 The Streamlit UI now includes:
 
 - **⏱️ Response Time**  
