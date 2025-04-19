@@ -1,6 +1,6 @@
 # 🌦️ MCP Weather Scraper
 
-A minimal working example of integrating an LLM (via OpenAI) with an [MCP (Model Context Protocol)](https://github.com/modelcontextprotocol) server to fetch and extract real-time weather data from the web.
+This project is an experimental implementation of the **[Model Context Protocol (MCP)](https://github.com/modelcontextprotocol)** using a lightweight LLM via ** OpenAI** and FastAPI to fetch and structure real-time weather information from open web sources. The goal is to explore how LLMs can interact with tools and serve as intelligent agents for retrieving and reasoning over unstructured web data.
 
 ---
 
@@ -12,11 +12,32 @@ A minimal working example of integrating an LLM (via OpenAI) with an [MCP (Model
 
 ## 🚀 Features
 
-- 🌍 Query weather data via natural language prompts
-- 📡 Scrape real-time results from the open web
-- 🧠 Extract structured weather info using an LLM
-- ⚡ Fast in-memory caching for repeated queries
-- 🧹 HTML cleanup with `selectolax` for more focused extraction
+- ✅ MCP-compliant server with weather scraping via browser search
+- ✅ Integration with OpenAI LLM (e.g., gpt-3.5-turbo)
+- ✅ FastAPI server provides weather info as callable MCP tool
+- ✅ Automatic HTML parsing using `selectolax` for performance
+- ✅ LLM handles unstructured web content extraction into structured schema
+- ✅ Streamlit app frontend for user interaction
+- ✅ Response caching using `functools.lru_cache`
+
+---
+
+#### 📊 Token Usage & Performance Metrics
+The Streamlit UI now includes:
+
+- **⏱️ Response Time**  
+  Time taken to fetch and process weather info
+
+- **🧠 Prompt Tokens**  
+  Tokens used in the LLM prompt
+
+- **💬 Completion Tokens**  
+  Tokens generated in the LLM response
+
+- **🔢 Total Tokens**  
+  Total token count per request, useful for cost tracking
+
+These are displayed in a clean visual layout under each result card.
 
 ---
 
